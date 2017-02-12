@@ -1,0 +1,67 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.04
+Created On: 3/3/2016 3:01:27 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : LAB 4
+00000000                             3  * Written by : Jose Capestany & Sayaf Almeri
+00000000                             4  * Date       : 2/24/2016
+00000000                             5  * Description: Recursive Subroutines
+00000000                             6  *-----------------------------------------------------------
+00001000                             7  START   ORG    $1000
+00001000                             8  
+00001000= 45 4E 54 45 52 20 ...      9  QUEST1  DC.B   'ENTER M: '
+00001009= 45 4E 54 45 52 20 ...     10  QUEST2  DC.B   'ENTER N: '
+00001012= 59 28 4D 2C 4E 29 ...     11  QUEST3  DC.B   'Y(M,N)is '
+0000101B  =00000009                 12  MQUEST  EQU    9
+0000101B                            13  
+0000101C  7001                      14  MAIN    MOVE.L #1,D0        * Displays ENTER M: to the user
+0000101E  227C 00001000             15          MOVEA.L #QUEST1,A1
+00001024  7209                      16          MOVE.L #MQUEST,D1
+00001026  4E4F                      17          TRAP #15
+00001028  7004                      18          MOVE.L #4,D0        * Asks the user to enter a number
+0000102A  4E4F                      19          TRAP #15
+0000102C  2E01                      20          MOVE.L D1,D7        * Stores the number in D7
+0000102E  4EB9 00001064             21          JSR Y               * CALCULATES Y(M)
+00001034  7001                      22          MOVE.L #1,D0        * Displays ENTER N: to the user
+00001036  227C 00001009             23          MOVEA.L #QUEST2,A1
+0000103C  7209                      24          MOVE.L #MQUEST,D1
+0000103E  4E4F                      25          TRAP #15
+00001040  7004                      26          MOVE.L #4,D0        * Asks he user to enter a number
+00001042  4E4F                      27          TRAP #15
+00001044  2E01                      28          MOVE.L D1,D7        * Stores the number in D7
+00001046  4EB9 00001064             29          JSR Y               * CALCULATES Y(N)
+0000104C  7001                      30          MOVE.L #1,D0        * Displays Y(M,N)is to the user
+0000104E  227C 00001012             31          MOVEA.L #QUEST3,A1  
+00001054  7209                      32          MOVE.L #MQUEST,D1
+00001056  4E4F                      33          TRAP #15    
+00001058  7003                      34          MOVE.L #3,D0
+0000105A  2206                      35          MOVE.L D6,D1
+0000105C  4E4F                      36          TRAP #15            * Displays the value of Y
+0000105E  4EB9 00001072             37          JSR STOP
+00001064                            38          
+00001064  DC87                      39  Y       ADD.L D7,D6         * CALCULATES Y(M), THEN ADDS Y(N) TO Y(M)
+00001066  5387                      40          SUB.L #1,D7
+00001068  BE7C 0001                 41          CMP #1,D7
+0000106C  66F6                      42          BNE Y
+0000106E  5286                      43          ADD.L #1,D6
+00001070  4E75                      44          RTS MAIN
+00001072                            45                  
+00001072  4E72 0A8C                 46  STOP    STOP #2700
+00001076                            47          END START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+MAIN                101C
+MQUEST              9
+QUEST1              1000
+QUEST2              1009
+QUEST3              1012
+START               1000
+STOP                1072
+Y                   1064

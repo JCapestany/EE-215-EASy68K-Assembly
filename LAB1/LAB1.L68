@@ -1,0 +1,93 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.04
+Created On: 2/3/2016 8:47:50 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : LAB1
+00000000                             3  * Written by : Jose Capestany & Sayaf Almeri
+00000000                             4  * Date       : 1/27/2016
+00000000                             5  * Description: Assembly Programming
+00000000                             6  *-----------------------------------------------------------
+00000000                             7      
+00000000                             8  * Put program code here
+00000000                             9     
+00000C00                            10      ORG    $C00           
+00000C00= 12345678                  11  X   DC.L   $12345678    ; defining X
+00000C04= 6789ABCD                  12  Y   DC.L   $6789ABCD    ; defining Y
+00000C08                            13  
+00001000                            14      ORG    $1000
+00001000  =00000C00                 15  X0  EQU    X            ; defining labels X0-X3
+00001000  =00000C01                 16  X1  EQU    X+1
+00001000  =00000C02                 17  X2  EQU    X+2
+00001000  =00000C03                 18  X3  EQU    X+3
+00001000                            19  
+00001000  =00000C04                 20  Y0  EQU    Y            ; defining labels Y0-Y3
+00001000  =00000C05                 21  Y1  EQU    Y+1
+00001000  =00000C06                 22  Y2  EQU    Y+2
+00001000  =00000C07                 23  Y3  EQU    Y+3
+00001000                            24  
+00001000                            25      
+00001000  21F8 0C00 0C10            26  INIT MOVE.L X0,$C10     ; copying a longword of X0 into M[$C10]
+00001006  31F8 0C00 0C20            27       MOVE.W X0,$C20     ; copying a word of X0 into M[$C20]
+0000100C  31F8 0C02 0C28            28       MOVE.W X2,$C28     ; copying a word of X2 into M[$C28]
+00001012  11F8 0C00 0C30            29       MOVE.B X0,$C30     ; copying a byte of X0 into M[$C30]
+00001018  11F8 0C01 0C34            30       MOVE.B X1,$C34     ; copying a byte of X1 into M[$C34]
+0000101E  11F8 0C02 0C38            31       MOVE.B X2,$C38     ; copying a byte of X2 into M[$C38]
+00001024  11F8 0C03 0C3C            32       MOVE.B X3,$C3C     ; copying a byte of X3 into M[$C3C]
+0000102A  21F8 0C02 0C40            33       MOVE.L X2,$C40     ; copying a longword of X2 into M[$C40]
+00001030  2038 0C00                 34       MOVE.L X0,D0       ; copying a longword of X0 into D0
+00001034  D0B8 0C04                 35       ADD.L  Y0,D0       ; adding a longword of Y0 to D0
+00001038  21C0 0C50                 36       MOVE.L D0,$C50     ; copying D0 into M[$C50]
+0000103C  3038 0C02                 37       MOVE.W X2,D0       ; copying a word of X2 into D0
+00001040  D078 0C06                 38       ADD.W  Y2,D0       ; adding a word of Y2 to D0
+00001044  31C0 0C58                 39       MOVE.W D0,$C58     ; copying D0 into M[$C58]
+00001048  1038 0C03                 40       MOVE.B X3,D0       ; copying a byte of X3 into D0
+0000104C  D038 0C07                 41       ADD.B  Y3,D0       ; adding a byte of Y3 to D0
+00001050  11C0 0C5C                 42       MOVE.B D0,$C5C     ; copying D0 into M[$C5C]
+00001054  2038 0C04                 43       MOVE.L Y0,D0       ; copying a longword of Y0 into D0
+00001058  90B8 0C00                 44       SUB.L  X0,D0       ; subtracting a longword of X0 from D0
+0000105C  21C0 0C70                 45       MOVE.L D0,$C70     ; copying D0 into M[$C70]
+00001060  3038 0C06                 46       MOVE.W Y2,D0       ; copying a word of Y2 into D0
+00001064  9078 0C02                 47       SUB.W  X2,D0       ; subtracting a word of X2 from D0
+00001068  31C0 0C78                 48       MOVE.W D0,$C78     ; copying D0 into M[$C78]
+0000106C  1038 0C07                 49       MOVE.B Y3,D0       ; copying a byte of Y3 into D0
+00001070  9038 0C03                 50       SUB.B  X3,D0       ; subtracting a byte of X3 from D0
+00001074  11C0 0C7C                 51       MOVE.B D0,$C7C     ; copying D0 into M[$C7C]
+00001078  2038 0C04                 52       MOVE.L Y0,D0       ; copying a longword of Y0 into D0
+0000107C  4680                      53       NOT.L  D0          ; turning D0 into its complement
+0000107E  21C0 0C80                 54       MOVE.L D0,$C80     ; copying D0 into M[$C80]
+00001082  3038 0C06                 55       MOVE.W Y2,D0       ; copying a word of Y2 into D0
+00001086  4640                      56       NOT.W  D0          ; turning D0 into its complement
+00001088  31C0 0C88                 57       MOVE.W D0,$C88     ; copying D0 into M[$C88]
+0000108C  1038 0C07                 58       MOVE.B Y3,D0       ; copying a byte of Y3 into D0
+00001090  4600                      59       NOT.B  D0          ; turning D0 into its complement
+00001092  11C0 0C8C                 60       MOVE.B D0,$C8C     ; copying D0 into M[$C8C]
+00001096  2038 0C02                 61       MOVE.L X2,D0       ; copying a longword of X2 into D0
+0000109A  D0B8 0C06                 62       ADD.L  Y2,D0       ; adding a longword of Y2 to D0
+0000109E  21C0 0CA0                 63       MOVE.L D0,$CA0     ; copying D0 into M[$CA0]
+000010A2  3038 0C00                 64       MOVE.W X0,D0       ; copying a word of X0 into D0
+000010A6  D078 0C00                 65       ADD.W  X0,D0       ; adding a word of X0 into D0
+000010AA  31C0 0CA8                 66       MOVE.W D0,$CA8     ; copying D0 into M[$CA8]
+000010AE  21C0 0CB0                 67       MOVE.L D0,$CB0     ; copying a longword of D0 into M[$CB0]
+000010B2                            68       
+000010B2  4E72 0A8C                 69       STOP #2700
+000010B6                            70       END $1000
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+INIT                1000
+X                   C00
+X0                  C00
+X1                  C01
+X2                  C02
+X3                  C03
+Y                   C04
+Y0                  C04
+Y1                  C05
+Y2                  C06
+Y3                  C07

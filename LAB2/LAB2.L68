@@ -1,0 +1,68 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.04
+Created On: 2/17/2016 10:04:27 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :lab02
+00000000                             3  * Written by :sayaf Almari & Jose Capestany 
+00000000                             4  * Date       :2/3/2016
+00000000                             5  * Description:Sorting Numbers
+00000000                             6  *-----------------------------------------------------------
+00000400                             7          ORG    $400
+00000400= 11 19 3F 1B 29 0F ...      8  DATA    DC.B    17,25,63,27,41,15,12,2,35,37,22,69,44,21,87,86,45,33,5,98 * 20 random numbers
+00000414  =00000013                  9  n       EQU     19  * Number of times for the inner loop
+00000414  =00000014                 10  m       EQU     20  * Number of times for the outer loop             
+00000414                            11  * Put program code here
+00000414                            12  
+00001000                            13          ORG    $1000
+00001000  1C3C 0014                 14          MOVE.B #m,D6    * Sets the outer loop counter to 20
+00001004  41F8 0400                 15  INIT    LEA.L DATA,A0   * Sets the data into address register 0
+00001008  1A3C 0013                 16          MOVE.B #n,D5    * Sets the inner loop counter to 19
+0000100C  1210                      17          MOVE.B (A0),D1  * Moves the first data point into D1
+0000100E  1418                      18          MOVE.B (A0)+,D2 * Moves the second data point into D2
+00001010  5306                      19          SUB.B #1,D6     * Subtracts one from the outer counter
+00001012  6700 0034                 20          BEQ STOP        * When the outer counter is zero end the program
+00001016  B441                      21  LOOP_1  CMP D1,D2       * Subtracts the first number from the second one
+00001018  6B00 000E                 22          BMI NEG         * If negative go to subroutine NEG
+0000101C  6A00 0002                 23          BPL POS         * If postive go to subroutine POS
+00001020  1202                      24  POS     MOVE.B D2,D1    * This subroutine just sets the next two...
+00001022  1418                      25          MOVE.B (A0)+,D2 * numbers in place to be compared next.
+00001024  6A00 001C                 26          BPL SUB         * It then goes to the SUB subroutine.
+00001028                            27          
+00001028  1801                      28  NEG     MOVE.B D1,D4    * This subroutines switches the place of two numbers...
+0000102A  1602                      29          MOVE.B D2,D3    * when the second number is smaller than the first one.
+0000102C  1103                      30          MOVE.B D3,-(A0)
+0000102E  1103                      31          MOVE.B D3,-(A0)
+00001030  10C3                      32          MOVE.B D3,(A0)+
+00001032  10C4                      33          MOVE.B D4,(A0)+
+00001034  1418                      34          MOVE.B (A0)+,D2
+00001036  9804                      35          SUB.B D4,D4
+00001038  9603                      36          SUB.B D3,D3
+0000103A  6A00 0006                 37          BPL SUB         * It then goes to the SUB subroutine
+0000103E  6B00 0002                 38          BMI SUB
+00001042  5305                      39  SUB     SUB.B #1,D5     * This subroutine just subtracts one from the inner counter
+00001044  67BE                      40          BEQ INIT        * If inner counter is zero it starts the comparison from the begining again.
+00001046  66CE                      41          BNE LOOP_1      * If inner counter is not zero it will continue to check the rest of the numbers.
+00001048                            42          
+00001048                            43  STOP
+00001048                            44                       
+00001048                            45  * Put variables and constants here
+00001048  4E72 0A8C                 46          STOP    #2700
+0000104C                            47          END     $1000
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+DATA                400
+INIT                1004
+LOOP_1              1016
+M                   14
+N                   13
+NEG                 1028
+POS                 1020
+STOP                1048
+SUB                 1042

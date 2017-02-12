@@ -1,0 +1,70 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.15.04
+Created On: 2/25/2016 2:47:28 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : Lab 3
+00000000                             3  * Written by : Jose Capestany and Sayaf Almari
+00000000                             4  * Date       : 2/10/2016
+00000000                             5  * Description: TRAP #15
+00000000                             6  *-----------------------------------------------------------
+00000000                             7  
+00001000                             8  START   ORG    $1000
+00001000                             9  
+00001000= 45 4E 54 45 52 20 ...     10  QUEST1  DC.B 'ENTER M: '
+00001009= 45 4E 54 45 52 20 ...     11  QUEST2  DC.B 'ENTER N: '
+00001012= 59 28 4D 2C 4E 29 ...     12  QUEST3  DC.B 'Y(M,N)is '
+0000101B  =00000009                 13  MQUEST  EQU 9
+0000101B                            14  
+0000101C  7001                      15  MAIN    MOVE.L #1,D0        * Displays ENTER M: to the user
+0000101E  227C 00001000             16          MOVEA.L #QUEST1,A1
+00001024  7209                      17          MOVE.L #MQUEST,D1
+00001026  4E4F                      18          TRAP #15
+00001028  7004                      19          MOVE.L #4,D0        * Asks the user to enter a number
+0000102A  4E4F                      20          TRAP #15
+0000102C  2A01                      21          MOVE.L D1,D5        * Stores the number in D5
+0000102E  BA7C 0000                 22          CMP #0,D5           * Compares the number to 0
+00001032  6700 003E                 23          BEQ STOP            * If the number is 0 stop the program
+00001036  7001                      24          MOVE.L #1,D0        * Displays ENTER N: to the user
+00001038  227C 00001009             25          MOVEA.L #QUEST2,A1
+0000103E  7209                      26          MOVE.L #MQUEST,D1
+00001040  4E4F                      27          TRAP #15
+00001042  7004                      28          MOVE.L #4,D0        * Asks he user to enter a number
+00001044  4E4F                      29          TRAP #15
+00001046  2C01                      30          MOVE.L D1,D6        * Stores the number in D6
+00001048  4EB9 0000106A             31          JSR Y               * Jump to subroutine Y
+0000104E  7001                      32          MOVE.L #1,D0        * Displays Y(M,N)is to the user
+00001050  227C 00001012             33          MOVEA.L #QUEST3,A1  
+00001056  7209                      34          MOVE.L #MQUEST,D1
+00001058  4E4F                      35          TRAP #15    
+0000105A  7003                      36          MOVE.L #3,D0
+0000105C  2207                      37          MOVE.L D7,D1
+0000105E  4E4F                      38          TRAP #15            * Displays the value of Y
+00001060  7000                      39          MOVE.L #0,D0
+00001062  7200                      40          MOVE.L #0,D1
+00001064  4E4F                      41          TRAP #15            * Used to create a new line
+00001066  4EB8 101C                 42          JSR MAIN            * Restarts the program
+0000106A                            43              
+0000106A  CCC5                      44  Y       MULU D5,D6          * Multiple D5 and D6 and stores it in D6
+0000106C  5A86                      45          ADD.L #5,D6         * Adds 5 to D6
+0000106E  2E06                      46          MOVE.L D6,D7        * Copies D6 into D7                   
+00001070  4E75                      47          RTS                 * Returns to main program
+00001072                            48          
+00001072  4E72 0A8C                 49  STOP    STOP #2700    
+00001076                            50          END START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+MAIN                101C
+MQUEST              9
+QUEST1              1000
+QUEST2              1009
+QUEST3              1012
+START               1000
+STOP                1072
+Y                   106A
